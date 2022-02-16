@@ -6,28 +6,95 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <properties>
-    <!--
-    <camunda.version>7.12.4-ee</camunda.version>
-    <camunda.starter.version>3.4.4</camunda.starter.version>
-    <spring.version>2.2.0.RELEASE</spring.version>
-    -->
-    <!--
-    <camunda.version>7.13.0-ee</camunda.version>
-    <camunda.starter.version>7.13.0-ee</camunda.starter.version>
-    <spring.version>2.2.0.RELEASE</spring.version>
-    -->
-    <!--
-    <camunda.version>7.13.3-ee</camunda.version>
-    <camunda.starter.version>7.13.3-ee</camunda.starter.version>
-    <spring.version>2.3.4.RELEASE</spring.version>
-    -->
 
-    <camunda.version>7.14.1-ee</camunda.version>
-    <camunda.starter.version>7.14.1-ee</camunda.starter.version>
-    <spring.version>2.3.4.RELEASE</spring.version>
+<!--    <camunda.version>7.10.0-ee</camunda.version>-->
+<!--    <camunda.starter.version>3.1.9</camunda.starter.version>-->
+<!--    <spring.version>2.0.9.RELEASE</spring.version>-->
 
-    <jaxb.version>2.2.3</jaxb.version>
-    <logback.version>1.1.11</logback.version>
+<!--    <camunda.version>7.10.0-ee</camunda.version>-->
+<!--    <camunda.starter.version>3.2.11</camunda.starter.version>-->
+<!--    <spring.version>2.1.18.RELEASE</spring.version>-->
+
+<!--    <camunda.version>7.11.0-ee</camunda.version>-->
+<!--    <camunda.starter.version>3.3.10</camunda.starter.version>-->
+<!--    <spring.version>2.1.18.RELEASE</spring.version>-->
+
+<!--    <camunda.version>7.11.20-ee</camunda.version>-->
+<!--    <camunda.starter.version>3.3.10</camunda.starter.version>-->
+<!--    <spring.version>2.1.18.RELEASE</spring.version>-->
+
+<!--    <camunda.version>7.12.0-ee</camunda.version>-->
+<!--    <camunda.starter.version>3.4.4</camunda.starter.version>-->
+<!--    <spring.version>2.2.13.RELEASE</spring.version>-->
+
+<!--    <camunda.version>7.12.4-ee</camunda.version>-->
+<!--    <camunda.starter.version>3.4.4</camunda.starter.version>-->
+<!--    <spring.version>2.2.13.RELEASE</spring.version>-->
+
+<!--    <camunda.version>7.13.0-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.13.0-ee</camunda.starter.version>-->
+<!--    <spring.version>2.2.13.RELEASE</spring.version>-->
+
+<!--    <camunda.version>7.13.2-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.13.2-ee</camunda.starter.version>-->
+<!--    <spring.version>2.2.13.RELEASE</spring.version>-->
+
+<!--    <camunda.version>7.13.3-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.13.3-ee</camunda.starter.version>-->
+<!--    <spring.version>2.3.12.RELEASE</spring.version>-->
+
+<!--    <camunda.version>7.14.1-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.14.1-ee</camunda.starter.version>-->
+<!--    <spring.version>2.3.12.RELEASE</spring.version>-->
+
+<!--    <camunda.version>7.14.2-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.14.2-ee</camunda.starter.version>-->
+<!--    <spring.version>2.4.11</spring.version>-->
+
+<!--    <camunda.version>7.14.5-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.14.5-ee</camunda.starter.version>-->
+<!--    <spring.version>2.4.11</spring.version>-->
+
+<!--    <camunda.version>7.14.6-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.14.6-ee</camunda.starter.version>-->
+<!--    <spring.version>2.4.11</spring.version>-->
+
+<!--    <camunda.version>7.14.8-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.14.8-ee</camunda.starter.version>-->
+<!--    <spring.version>2.4.11</spring.version>-->
+
+<!--    <camunda.version>7.14.10-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.14.10-ee</camunda.starter.version>-->
+<!--    <spring.version>2.4.11</spring.version>-->
+
+<!--    <camunda.version>7.14.12-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.14.12-ee</camunda.starter.version>-->
+<!--    <spring.version>2.4.11</spring.version>-->
+
+<!--    <camunda.version>7.15.0-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.15.0-ee</camunda.starter.version>-->
+<!--    <spring.version>2.4.11</spring.version>-->
+
+<!--    <camunda.version>7.15.2-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.15.2-ee</camunda.starter.version>-->
+<!--    <spring.version>2.4.11</spring.version>-->
+
+<!--    <camunda.version>7.15.3-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.15.3-ee</camunda.starter.version>-->
+<!--    <spring.version>2.5.5</spring.version>-->
+
+<!--    <camunda.version>7.15.6-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.15.6-ee</camunda.starter.version>-->
+<!--    <spring.version>2.5.5</spring.version>-->
+
+    <camunda.version>7.16.5-ee</camunda.version>
+    <camunda.starter.version>7.16.5-ee</camunda.starter.version>
+    <spring.version>2.5.5</spring.version>
+
+    <lombok.version>1.18.22</lombok.version>
+    <jaxb.version>2.3.5</jaxb.version>
+    <logback.version>1.2.6</logback.version>
+
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
@@ -76,10 +143,6 @@
       <version>${camunda.starter.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jdbc</artifactId>
     </dependency>
@@ -88,13 +151,25 @@
       <artifactId>jaxb-impl</artifactId>
       <version>${jaxb.version}</version>
     </dependency>
-    <!--
+
+<!--    <dependency>-->
+<!--      <groupId>ch.qos.logback</groupId>-->
+<!--      <artifactId>logback-classic</artifactId>-->
+<!--      <version>${logback.version}</version>-->
+<!--    </dependency>-->
+
+
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>${logback.version}</version>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
     </dependency>
-    -->
+
+    <dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>${lombok.version}</version>
+    <scope>provided</scope>
+    </dependency>
   </dependencies>
   <!--
   <build>

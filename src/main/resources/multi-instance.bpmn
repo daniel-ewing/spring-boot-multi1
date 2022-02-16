@@ -1,119 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1jsl00l" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1jsl00l" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.8.1">
   <bpmn:process id="multi-instance" name="Multi Instance" isExecutable="true">
-    <bpmn:startEvent id="Event_StartProcess" name="Start Process" camunda:asyncBefore="true">
+    <bpmn:startEvent id="start-process" name="Start Process" camunda:asyncBefore="true">
       <bpmn:outgoing>Flow_1gmo4za</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:endEvent id="Event_EndProcess" name="End Process">
-      <bpmn:incoming>Flow_1fqjv2a</bpmn:incoming>
+      <bpmn:incoming>Flow_1iyl0eb</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:subProcess id="Activity_SubProcess" name="Sub Process">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="Input_23fk0i7" />
+          <camunda:inputParameter name="Input_0uqqled" />
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ost0wg</bpmn:incoming>
       <bpmn:outgoing>Flow_1fqjv2a</bpmn:outgoing>
-      <bpmn:multiInstanceLoopCharacteristics camunda:collection="${taskNumbers}" camunda:elementVariable="taskNumber" />
+      <bpmn:multiInstanceLoopCharacteristics camunda:asyncBefore="true" camunda:exclusive="false" camunda:collection="${names}" camunda:elementVariable="name" />
       <bpmn:startEvent id="Event_StartSubProcess" name="Start Sub Process">
         <bpmn:outgoing>Flow_0adnt9p</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:endEvent id="Event_EndSubProcess" name="End Sub Process">
-        <bpmn:incoming>Flow_1tr8zda</bpmn:incoming>
+        <bpmn:incoming>Flow_1ri8rro</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_0adnt9p" sourceRef="Event_StartSubProcess" targetRef="Activity_ShowVariables" />
-      <bpmn:serviceTask id="Activity_ShowVariables" name="Show Variables" camunda:class="org.camunda.bpm.spring.boot.multi1.ShowVariables">
+      <bpmn:sequenceFlow id="Flow_0adnt9p" sourceRef="Event_StartSubProcess" targetRef="show-names" />
+      <bpmn:serviceTask id="show-names" name="Show Names" camunda:delegateExpression="${showNames}">
         <bpmn:incoming>Flow_0adnt9p</bpmn:incoming>
         <bpmn:outgoing>Flow_1nnnf45</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_1nnnf45" sourceRef="Activity_ShowVariables" targetRef="Activity_SetLocalVariables" />
-      <bpmn:userTask id="Activity_Task1" name="Task 1">
-        <bpmn:incoming>Flow_0v4873z</bpmn:incoming>
-        <bpmn:outgoing>Flow_1tr8zda</bpmn:outgoing>
-      </bpmn:userTask>
-      <bpmn:sequenceFlow id="Flow_1tr8zda" sourceRef="Activity_Task1" targetRef="Event_EndSubProcess" />
-      <bpmn:sequenceFlow id="Flow_0v4873z" sourceRef="Activity_SetLocalVariables" targetRef="Activity_Task1" />
-      <bpmn:serviceTask id="Activity_SetLocalVariables" name="Set Local Variables" camunda:class="org.camunda.bpm.spring.boot.multi1.SetLocalVariables">
+      <bpmn:sequenceFlow id="Flow_1nnnf45" sourceRef="show-names" targetRef="set-local-email-addresses" />
+      <bpmn:sequenceFlow id="Flow_0v4873z" sourceRef="set-local-email-addresses" targetRef="collect-email-addresses" />
+      <bpmn:serviceTask id="set-local-email-addresses" name="Set Local Email Addresses" camunda:delegateExpression="${setLocalEmailAddresses}">
         <bpmn:incoming>Flow_1nnnf45</bpmn:incoming>
         <bpmn:outgoing>Flow_0v4873z</bpmn:outgoing>
       </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_1ri8rro" sourceRef="collect-email-addresses" targetRef="Event_EndSubProcess" />
+      <bpmn:serviceTask id="collect-email-addresses" name="Collect Email Addresses" camunda:asyncAfter="true" camunda:exclusive="false" camunda:delegateExpression="${collectEmailAddresses}">
+        <bpmn:incoming>Flow_0v4873z</bpmn:incoming>
+        <bpmn:outgoing>Flow_1ri8rro</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:textAnnotation id="TextAnnotation_01c4utr">
+        <bpmn:text>Asynchronous After
+(not Exclusive)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="Association_1a49vej" sourceRef="collect-email-addresses" targetRef="TextAnnotation_01c4utr" />
     </bpmn:subProcess>
-    <bpmn:sequenceFlow id="Flow_1fqjv2a" sourceRef="Activity_SubProcess" targetRef="Event_EndProcess" />
-    <bpmn:sequenceFlow id="Flow_1gmo4za" sourceRef="Event_StartProcess" targetRef="Activity_SetVariables" />
-    <bpmn:sequenceFlow id="Flow_1ost0wg" sourceRef="Activity_SetVariables" targetRef="Activity_SubProcess" />
-    <bpmn:serviceTask id="Activity_SetVariables" name="Set Variables" camunda:class="org.camunda.bpm.spring.boot.multi1.SetVariables">
+    <bpmn:sequenceFlow id="Flow_1fqjv2a" sourceRef="Activity_SubProcess" targetRef="Activity_0xihe8o" />
+    <bpmn:sequenceFlow id="Flow_1gmo4za" sourceRef="start-process" targetRef="set-names" />
+    <bpmn:sequenceFlow id="Flow_1ost0wg" sourceRef="set-names" targetRef="Activity_SubProcess" />
+    <bpmn:serviceTask id="set-names" name="Set Names" camunda:delegateExpression="${setNames}">
       <bpmn:incoming>Flow_1gmo4za</bpmn:incoming>
       <bpmn:outgoing>Flow_1ost0wg</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1iyl0eb" sourceRef="Activity_0xihe8o" targetRef="Event_EndProcess" />
+    <bpmn:userTask id="Activity_0xihe8o">
+      <bpmn:incoming>Flow_1fqjv2a</bpmn:incoming>
+      <bpmn:outgoing>Flow_1iyl0eb</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:textAnnotation id="TextAnnotation_1kij1te">
+      <bpmn:text>Multi Instance Asynchronous Before
+(not Multi Instance Exclusive)</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_01dd3p3" sourceRef="Activity_SubProcess" targetRef="TextAnnotation_1kij1te" />
   </bpmn:process>
   <bpmn:message id="Message_1xlgedp" name="Message1" />
   <bpmn:message id="Message_1fppawz" name="Message2" />
   <bpmn:message id="Message_1hifab1" name="Message0" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="multi-instance">
+      <bpmndi:BPMNShape id="TextAnnotation_1kij1te_di" bpmnElement="TextAnnotation_1kij1te">
+        <dc:Bounds x="1110" y="80" width="210" height="43" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1ost0wg_di" bpmnElement="Flow_1ost0wg">
-        <di:waypoint x="370" y="187" />
-        <di:waypoint x="440" y="187" />
+        <di:waypoint x="370" y="267" />
+        <di:waypoint x="440" y="267" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1gmo4za_di" bpmnElement="Flow_1gmo4za">
-        <di:waypoint x="208" y="187" />
-        <di:waypoint x="270" y="187" />
+        <di:waypoint x="208" y="267" />
+        <di:waypoint x="270" y="267" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1fqjv2a_di" bpmnElement="Flow_1fqjv2a">
-        <di:waypoint x="1180" y="180" />
-        <di:waypoint x="1262" y="180" />
+        <di:waypoint x="1190" y="260" />
+        <di:waypoint x="1260" y="260" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="Event_StartProcess">
-        <dc:Bounds x="172" y="169" width="36" height="36" />
+      <bpmndi:BPMNEdge id="Flow_1iyl0eb_di" bpmnElement="Flow_1iyl0eb">
+        <di:waypoint x="1360" y="260" />
+        <di:waypoint x="1422" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start-process">
+        <dc:Bounds x="172" y="249" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="157" y="215" width="67" height="14" />
+          <dc:Bounds x="157" y="295" width="67" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1uzbska_di" bpmnElement="set-names">
+        <dc:Bounds x="270" y="227" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0jns06d_di" bpmnElement="Event_EndProcess">
-        <dc:Bounds x="1262" y="162" width="36" height="36" />
+        <dc:Bounds x="1422" y="242" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1249" y="215" width="63" height="14" />
+          <dc:Bounds x="1409" y="295" width="63" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1q6fnzf_di" bpmnElement="Activity_0xihe8o">
+        <dc:Bounds x="1260" y="220" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rdhdjr_di" bpmnElement="Activity_SubProcess" isExpanded="true">
-        <dc:Bounds x="440" y="64" width="740" height="256" />
+        <dc:Bounds x="440" y="144" width="750" height="256" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_01c4utr_di" bpmnElement="TextAnnotation_01c4utr">
+        <dc:Bounds x="980" y="170" width="120" height="40" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0v4873z_di" bpmnElement="Flow_0v4873z">
-        <di:waypoint x="840" y="190" />
-        <di:waypoint x="890" y="190" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1tr8zda_di" bpmnElement="Flow_1tr8zda">
-        <di:waypoint x="990" y="190" />
-        <di:waypoint x="1052" y="190" />
+        <di:waypoint x="840" y="270" />
+        <di:waypoint x="890" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1nnnf45_di" bpmnElement="Flow_1nnnf45">
-        <di:waypoint x="690" y="190" />
-        <di:waypoint x="740" y="190" />
+        <di:waypoint x="690" y="270" />
+        <di:waypoint x="740" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0adnt9p_di" bpmnElement="Flow_0adnt9p">
-        <di:waypoint x="528" y="190" />
-        <di:waypoint x="590" y="190" />
+        <di:waypoint x="528" y="270" />
+        <di:waypoint x="590" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ri8rro_di" bpmnElement="Flow_1ri8rro">
+        <di:waypoint x="990" y="270" />
+        <di:waypoint x="1062" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_12dxtv5_di" bpmnElement="Event_StartSubProcess">
-        <dc:Bounds x="492" y="172" width="36" height="36" />
+        <dc:Bounds x="492" y="252" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="468" y="215" width="90" height="14" />
+          <dc:Bounds x="468" y="295" width="90" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0t9ban3_di" bpmnElement="show-names">
+        <dc:Bounds x="590" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gktrg3_di" bpmnElement="set-local-email-addresses">
+        <dc:Bounds x="740" y="230" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1xgoec8_di" bpmnElement="Event_EndSubProcess">
-        <dc:Bounds x="1052" y="172" width="36" height="36" />
+        <dc:Bounds x="1062" y="252" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1038" y="215" width="86" height="14" />
+          <dc:Bounds x="1048" y="295" width="86" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0t9ban3_di" bpmnElement="Activity_ShowVariables">
-        <dc:Bounds x="590" y="150" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1l7dfi3_di" bpmnElement="collect-email-addresses">
+        <dc:Bounds x="890" y="230" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_03bj5t5_di" bpmnElement="Activity_Task1">
-        <dc:Bounds x="890" y="150" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0gktrg3_di" bpmnElement="Activity_SetLocalVariables">
-        <dc:Bounds x="740" y="150" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1uzbska_di" bpmnElement="Activity_SetVariables">
-        <dc:Bounds x="270" y="147" width="100" height="80" />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1a49vej_di" bpmnElement="Association_1a49vej">
+        <di:waypoint x="982" y="230" />
+        <di:waypoint x="1004" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_01dd3p3_di" bpmnElement="Association_01dd3p3">
+        <di:waypoint x="1051" y="144" />
+        <di:waypoint x="1110" y="112" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
