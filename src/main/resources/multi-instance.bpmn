@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1jsl00l" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
+  <bpmn:process id="multi-instance" name="Multi Instance" isExecutable="true">
+    <bpmn:startEvent id="Event_StartProcess" name="Start Process" camunda:asyncBefore="true">
+      <bpmn:outgoing>Flow_1gmo4za</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_EndProcess" name="End Process">
+      <bpmn:incoming>Flow_1fqjv2a</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:subProcess id="Activity_SubProcess" name="Sub Process">
+      <bpmn:incoming>Flow_1ost0wg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1fqjv2a</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics camunda:collection="${taskNumbers}" camunda:elementVariable="taskNumber" />
+      <bpmn:startEvent id="Event_StartSubProcess" name="Start Sub Process">
+        <bpmn:outgoing>Flow_0adnt9p</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:endEvent id="Event_EndSubProcess" name="End Sub Process">
+        <bpmn:incoming>Flow_1tr8zda</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0adnt9p" sourceRef="Event_StartSubProcess" targetRef="Activity_ShowVariables" />
+      <bpmn:serviceTask id="Activity_ShowVariables" name="Show Variables" camunda:class="org.camunda.bpm.spring.boot.multi1.ShowVariables">
+        <bpmn:incoming>Flow_0adnt9p</bpmn:incoming>
+        <bpmn:outgoing>Flow_1nnnf45</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_1nnnf45" sourceRef="Activity_ShowVariables" targetRef="Activity_SetLocalVariables" />
+      <bpmn:userTask id="Activity_Task1" name="Task 1">
+        <bpmn:incoming>Flow_0v4873z</bpmn:incoming>
+        <bpmn:outgoing>Flow_1tr8zda</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_1tr8zda" sourceRef="Activity_Task1" targetRef="Event_EndSubProcess" />
+      <bpmn:sequenceFlow id="Flow_0v4873z" sourceRef="Activity_SetLocalVariables" targetRef="Activity_Task1" />
+      <bpmn:serviceTask id="Activity_SetLocalVariables" name="Set Local Variables" camunda:class="org.camunda.bpm.spring.boot.multi1.SetLocalVariables">
+        <bpmn:incoming>Flow_1nnnf45</bpmn:incoming>
+        <bpmn:outgoing>Flow_0v4873z</bpmn:outgoing>
+      </bpmn:serviceTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_1fqjv2a" sourceRef="Activity_SubProcess" targetRef="Event_EndProcess" />
+    <bpmn:sequenceFlow id="Flow_1gmo4za" sourceRef="Event_StartProcess" targetRef="Activity_SetVariables" />
+    <bpmn:sequenceFlow id="Flow_1ost0wg" sourceRef="Activity_SetVariables" targetRef="Activity_SubProcess" />
+    <bpmn:serviceTask id="Activity_SetVariables" name="Set Variables" camunda:class="org.camunda.bpm.spring.boot.multi1.SetVariables">
+      <bpmn:incoming>Flow_1gmo4za</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ost0wg</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmn:message id="Message_1xlgedp" name="Message1" />
+  <bpmn:message id="Message_1fppawz" name="Message2" />
+  <bpmn:message id="Message_1hifab1" name="Message0" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="multi-instance">
+      <bpmndi:BPMNEdge id="Flow_1ost0wg_di" bpmnElement="Flow_1ost0wg">
+        <di:waypoint x="370" y="187" />
+        <di:waypoint x="440" y="187" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gmo4za_di" bpmnElement="Flow_1gmo4za">
+        <di:waypoint x="208" y="187" />
+        <di:waypoint x="270" y="187" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fqjv2a_di" bpmnElement="Flow_1fqjv2a">
+        <di:waypoint x="1180" y="180" />
+        <di:waypoint x="1262" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="Event_StartProcess">
+        <dc:Bounds x="172" y="169" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="157" y="215" width="67" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jns06d_di" bpmnElement="Event_EndProcess">
+        <dc:Bounds x="1262" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1249" y="215" width="63" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rdhdjr_di" bpmnElement="Activity_SubProcess" isExpanded="true">
+        <dc:Bounds x="440" y="64" width="740" height="256" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0v4873z_di" bpmnElement="Flow_0v4873z">
+        <di:waypoint x="840" y="190" />
+        <di:waypoint x="890" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tr8zda_di" bpmnElement="Flow_1tr8zda">
+        <di:waypoint x="990" y="190" />
+        <di:waypoint x="1052" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nnnf45_di" bpmnElement="Flow_1nnnf45">
+        <di:waypoint x="690" y="190" />
+        <di:waypoint x="740" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0adnt9p_di" bpmnElement="Flow_0adnt9p">
+        <di:waypoint x="528" y="190" />
+        <di:waypoint x="590" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_12dxtv5_di" bpmnElement="Event_StartSubProcess">
+        <dc:Bounds x="492" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="468" y="215" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1xgoec8_di" bpmnElement="Event_EndSubProcess">
+        <dc:Bounds x="1052" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1038" y="215" width="86" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0t9ban3_di" bpmnElement="Activity_ShowVariables">
+        <dc:Bounds x="590" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03bj5t5_di" bpmnElement="Activity_Task1">
+        <dc:Bounds x="890" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gktrg3_di" bpmnElement="Activity_SetLocalVariables">
+        <dc:Bounds x="740" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1uzbska_di" bpmnElement="Activity_SetVariables">
+        <dc:Bounds x="270" y="147" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
