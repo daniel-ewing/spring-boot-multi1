@@ -16,11 +16,11 @@ public class SetNames implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        log.info("-----> execute: Enter");
+        if (log.isDebugEnabled()) log.debug("-----> execute: Enter");
 
         List<String> names = new ArrayList<>(Arrays.asList("John", "Paul", "Ringo", "George"));
         delegateExecution.setVariable("names", names);
 
-        log.info("-----> execute: Exit");
+        if (log.isDebugEnabled()) log.debug("-----> execute: Exit");
     }
 }

@@ -13,13 +13,14 @@ public class SetLocalEmailAddresses implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        log.info("-----> execute: Enter");
+    if (log.isDebugEnabled()) log.debug("-----> execute: Enter");
 
         String name = (String) delegateExecution.getVariable ("name");
-        log.info("-----> name = {}", name);
+        String localEmail = name.toLowerCase() + "@beatles.com";
+        if (log.isDebugEnabled()) log.debug("-----> execute: name = {}", name);
         delegateExecution.setVariableLocal("localEmail", name.toLowerCase() + "@beatles.com");
 
-        log.info("-----> execute: Exit");
+        if (log.isDebugEnabled()) log.debug("-----> execute: Exit");
     }
 
 }

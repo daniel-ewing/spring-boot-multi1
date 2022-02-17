@@ -15,12 +15,12 @@ public class ShowNames implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        log.info("-----> execute: Enter");
+        if (log.isDebugEnabled()) log.debug("-----> execute: Enter");
 
         List<String> names = (ArrayList<String>) delegateExecution.getVariable("names");
         String name = (String) delegateExecution.getVariable("name");
-        log.info("-----> names = {}  --  name = {}", names.toString(), name);
+        if (log.isDebugEnabled()) log.debug("-----> execute: names = {}  --  name = {}", names, name);
 
-        log.info("-----> execute: Exit");
+        if (log.isDebugEnabled()) log.debug("-----> execute: Exit");
     }
 }

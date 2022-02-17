@@ -1,8 +1,11 @@
 package org.camunda.bpm.spring.boot.multi1.delegate;
 
 import lombok.extern.slf4j.Slf4j;
+import org.camunda.bpm.engine.HistoryService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.camunda.bpm.engine.history.HistoricVariableInstance;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,22 +15,26 @@ import java.util.List;
 @Slf4j
 public class CollectEmailAddresses implements JavaDelegate {
 
+    @Autowired
+    HistoryService historyService;
+
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        log.info("-----> execute: Enter");
+        if (log.isDebugEnabled()) log.debug("-----> execute: Enter");
 
-        List<String> emailAddresses;
-        synchronized (delegateExecution) {
-            emailAddresses = (ArrayList<String>) delegateExecution.getVariable("emailAddresses");
-            if (emailAddresses == null) {
-                emailAddresses = new ArrayList<>();
-            }
+        List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery()
+                .processInstanceId(delegateExecution.getProcessInstanceId())
+                .variableName("localEmail")
+                .list();
+
+        List<String> emailAddresses = new ArrayList<>();
+
+        for (HistoricVariableInstance historicVariableInstance : historicVariableInstances) {
+            emailAddresses.add(historicVariableInstance.getValue().toString());
         }
-        String localEmail = (String) delegateExecution.getVariable("localEmail");
-        emailAddresses.add(localEmail);
-        delegateExecution.setVariable("emailAddresses",emailAddresses);
-        log.info("-----> emailAddresses = {}", emailAddresses.toString());
 
-        log.info("-----> execute: Exit");
+        if (log.isDebugEnabled()) log.debug("-----> emailAddresses = {}", emailAddresses);
+
+        if (log.isDebugEnabled()) log.debug("-----> execute: Exit");
     }
 }
