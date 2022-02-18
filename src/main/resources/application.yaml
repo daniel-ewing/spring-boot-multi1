@@ -61,13 +61,14 @@ spring:
 #    username: camunda
 #    password: Camunda1
 
-## Logging Settings
-#logging:
-#  file:
-#    path: ./logs           # specify a path to write to file, otherwise it defaults to the console.
-#  level:
-#    # Camunda Loggers
-#    org.camunda: INFO     # WARNING!! THIS NAMESPACE WILL OUTPUT ALL CAMUNDA LOGS AT THE SPECIFIED LEVEL.
+# Logging Settings
+logging:
+  file:
+    path: ./logs           # specify a path to write to file, otherwise it defaults to the console.
+  level:
+    # Camunda Loggers
+    org.camunda: INFO     # WARNING!! THIS NAMESPACE WILL OUTPUT ALL CAMUNDA LOGS AT THE SPECIFIED LEVEL.
+    org.camunda.bpm.spring.boot.multi1: DEBUG
 #    org.camunda.bpm.engine.cmd: DEBUG
 #    org.camunda.bpm.engine.impl.persistence.entity: DEBUG
 #    org.camunda.bpm.engine.impl.batch.BatchEntity: DEBUG
