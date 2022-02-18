@@ -1,8 +1,9 @@
-package org.camunda.bpm.spring.boot.multi1.delegate;
+package org.camunda.bpm.spring.boot.multi1.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.HistoryService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.engine.delegate.ExecutionListener;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.history.HistoricVariableInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,13 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class CollectEmailAddresses implements JavaDelegate {
+public class CollectEmailAddresses implements ExecutionListener {
 
     @Autowired
     HistoryService historyService;
 
     @Override
-    public void execute(DelegateExecution delegateExecution) throws Exception {
+    public void notify(DelegateExecution delegateExecution) throws Exception {
         if (log.isDebugEnabled()) log.debug("-----> execute: Enter");
 
         List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery()
