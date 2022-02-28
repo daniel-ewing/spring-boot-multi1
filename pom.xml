@@ -92,6 +92,9 @@
     <spring.version>2.5.5</spring.version>
 
     <lombok.version>1.18.22</lombok.version>
+    <ojdbc11.version>21.3.0.0</ojdbc11.version>
+    <mssql-jdbc.version>9.4.0.jre11</mssql-jdbc.version>
+
     <jaxb.version>2.3.5</jaxb.version>
     <logback.version>1.2.6</logback.version>
 
@@ -118,14 +121,6 @@
     </dependencies>
   </dependencyManagement>
 
-  <repositories>
-    <repository>
-      <id>camunda-bpm-nexus-ee</id>
-      <name>camunda-bpm-nexus-ee</name>
-      <url>https://app.camunda.com/nexus/content/repositories/camunda-bpm-ee</url>
-    </repository>
-  </repositories>
-
   <dependencies>
     <dependency>
       <groupId>org.camunda.bpm.springboot</groupId>
@@ -146,18 +141,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jdbc</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
-      <version>${jaxb.version}</version>
-    </dependency>
-
-<!--    <dependency>-->
-<!--      <groupId>ch.qos.logback</groupId>-->
-<!--      <artifactId>logback-classic</artifactId>-->
-<!--      <version>${logback.version}</version>-->
-<!--    </dependency>-->
-
 
     <dependency>
       <groupId>com.h2database</groupId>
@@ -165,11 +148,36 @@
     </dependency>
 
     <dependency>
-    <groupId>org.projectlombok</groupId>
-    <artifactId>lombok</artifactId>
-    <version>${lombok.version}</version>
-    <scope>provided</scope>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
     </dependency>
+
+<!--    <dependency>-->
+<!--      <groupId>com.microsoft.sqlserver</groupId>-->
+<!--      <artifactId>mssql-jdbc</artifactId>-->
+<!--      <version>${mssql-jdbc.version}</version>-->
+<!--    </dependency>-->
+
+<!--    <dependency>-->
+<!--      <groupId>com.oracle.database.jdbc</groupId>-->
+<!--      <artifactId>ojdbc11</artifactId>-->
+<!--      <version>${ojdbc11.version}</version>-->
+<!--    </dependency>-->
+
+<!--    <dependency>-->
+<!--      <groupId>com.sun.xml.bind</groupId>-->
+<!--      <artifactId>jaxb-impl</artifactId>-->
+<!--      <version>${jaxb.version}</version>-->
+<!--    </dependency>-->
+
+<!--    <dependency>-->
+<!--      <groupId>ch.qos.logback</groupId>-->
+<!--      <artifactId>logback-classic</artifactId>-->
+<!--      <version>${logback.version}</version>-->
+<!--    </dependency>-->
+
   </dependencies>
   <!--
   <build>

@@ -1,11 +1,10 @@
-package org.camunda.bpm.spring.boot.multi1.delegate;
+package com.dewing.spring.boot.multi1.delegate;
 
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 
 import org.springframework.stereotype.Component;
-
 
 @Component
 @Slf4j
@@ -22,5 +21,4 @@ public class SetLocalEmailAddresses implements JavaDelegate {
 
         if (log.isDebugEnabled()) log.debug("-----> execute: Exit");
     }
-
 }
