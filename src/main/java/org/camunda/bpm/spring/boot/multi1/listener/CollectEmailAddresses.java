@@ -36,6 +36,8 @@ public class CollectEmailAddresses implements ExecutionListener {
 
         if (log.isDebugEnabled()) log.debug("-----> emailAddresses = {}", emailAddresses);
 
+        delegateExecution.setVariable("emailAddresses", emailAddresses);
+
         if (log.isDebugEnabled()) log.debug("-----> execute: Exit");
     }
 }
