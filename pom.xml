@@ -85,18 +85,39 @@
 
 <!--    <camunda.version>7.15.6-ee</camunda.version>-->
 <!--    <camunda.starter.version>7.15.6-ee</camunda.starter.version>-->
-<!--    <spring.version>2.5.5</spring.version>-->
+<!--    <spring.version>2.5.15</spring.version>-->
 
-    <camunda.version>7.16.5-ee</camunda.version>
-    <camunda.starter.version>7.16.5-ee</camunda.starter.version>
-    <spring.version>2.5.5</spring.version>
+<!--    <camunda.version>7.16.2-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.16.2-ee</camunda.starter.version>-->
+<!--    <spring.version>2.5.15</spring.version>-->
+
+<!--    <camunda.version>7.17.2-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.17.2-ee</camunda.starter.version>-->
+<!--    <spring.version>2.6.15</spring.version>-->
+
+<!--    <camunda.version>7.18.12-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.18.2-ee</camunda.starter.version>-->
+<!--    <spring.version>2.7.17</spring.version>-->
+
+<!--    <camunda.version>7.19.8-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.19.8-ee</camunda.starter.version>-->
+<!--    <spring.version>2.7.17</spring.version>-->
+
+<!--    <camunda.version>7.20.1-ee</camunda.version>-->
+<!--    <camunda.starter.version>7.20.1-ee</camunda.starter.version>-->
+<!--    <spring.version>3.1.5</spring.version>-->
+
+    <camunda.version>7.21.0-ee</camunda.version>
+    <camunda.starter.version>7.21.0-ee</camunda.starter.version>
+    <spring.version>3.2.5</spring.version>
+
+    <jaxb.version>3.0.2</jaxb.version>
 
     <lombok.version>1.18.22</lombok.version>
-    <jaxb.version>2.3.5</jaxb.version>
     <logback.version>1.2.6</logback.version>
 
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
   </properties>
 
   <dependencyManagement>
@@ -117,14 +138,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <repositories>
-    <repository>
-      <id>camunda-bpm-nexus-ee</id>
-      <name>camunda-bpm-nexus-ee</name>
-      <url>https://app.camunda.com/nexus/content/repositories/camunda-bpm-ee</url>
-    </repository>
-  </repositories>
 
   <dependencies>
     <dependency>
@@ -171,13 +184,13 @@
     <scope>provided</scope>
     </dependency>
   </dependencies>
-  <!--
+
   <build>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>2.3.6.RELEASE</version>
+        <version>${spring.version}</version>
         <configuration>
           <layout>ZIP</layout>
         </configuration>
@@ -189,7 +202,29 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>copy-bpmn-to-root-level</id>
+            <phase>package</phase>
+            <configuration>
+              <target>
+                <zip destfile="${project.build.directory}/${project.build.finalName}.jar"
+                     update="yes" compress="false"
+                     basedir="${project.build.directory}/classes/"
+                     includes="bpmn/**">
+                </zip>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
-  -->
 </project>
